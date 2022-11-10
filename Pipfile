@@ -11,6 +11,8 @@ scikit-learn = "*"
 seaborn = "*"
 bentoml = "*"
 jupyter = "*"
+xgboost = "*"
+pydantic = "*"
 
 [dev-packages]
 

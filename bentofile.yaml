@@ -1,0 +1,10 @@
+service: "predict.py:svc"
+labels:
+  owner: jxareas
+  project: phone_price_predictor
+include:
+- "*.py"
+python:
+  packages:
+    - xgboost
+    - sklearn
