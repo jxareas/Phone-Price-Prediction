@@ -10,6 +10,7 @@ matplotlib = "*"
 scikit-learn = "*"
 seaborn = "*"
 bentoml = "*"
+jupyter = "*"
 
 [dev-packages]
 
