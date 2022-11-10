@@ -1,6 +1,7 @@
 import numpy as np
 import bentoml
 from bentoml.io import JSON
+from pydantic import BaseModel, Field
 
 model_ref = bentoml.xgboost.get("xgboost_phone_predictor:latest")
 dv = model_ref.custom_objects['dictVectorizer']

@@ -53,6 +53,8 @@ This is an example of how to list things you need to use this software
 
 * Python
 * Pipenv
+* Docker
+* Windows Subsystem for Linux (if using Windows)
 
 ## Installing Dependencies
 
@@ -66,9 +68,9 @@ pipenv shell
 
 ## Building the Model
 
-You can run the [`train.py`]() file or
+You can run the [`train.py`](/models/train.py) file or
 the
-full [`model_training.ipynb`](https://github.com/jxareas/Phone-Price-Prediction/blob/master/notebooks/model_training.ipynb)
+full [`model_training.ipynb`](/notebooks/model_training.ipynb)
 Jupyter Notebook to perform all the steps
 required to train the final model used in this project, which is a Gradient Boosted Trees Regressor (XGBoost).
 
@@ -80,12 +82,57 @@ python train.py
 
 ## Serving the Model (Locally)
 
-We can serve our model with BentoML and the [`predict.py`]() script by running:
+We can serve our model with BentoML and the [`predict.py`](/predict.py) script by running:
+
 ```
 bentoml serve predict.py:svc
 ```
 
 This scripts loads the latest model available locally, which can be used in the browser as BentoML automatically
 creates a Swagger UI at http://localhost:3000.
+The variables expected by the model to predict the price of a phone can be found in
+the [`sample_record.json`](/utils/sample_record.json) file.
 
+## Building the Bento and Containerizing the Model
 
+To containerize the model into a Docker Container with all the required dependencies we use BentoML, which facilitates
+this procedure.
+With BentoML, in order to containerize the model, it's only necessary to specify a [`bentofile.yaml`](/bentofile.yaml)
+file which
+specifies the project name, owner and all the required dependencies.
+After that, we just have to run the command.
+
+```yaml
+bentoml build
+``` 
+
+Similar to saving a model, a unique version tag will be automatically generated for the newly created Bento.
+The output expected is similar to the one shown below:
+
+```yaml
+bentoml build
+
+Building BentoML service "phone_price_predictor:dpijemevl6nlhlg6" from build context "/home/user/gallery/quickstart"
+Packing model "iris_clf:zy3dfgxzqkjrlgxi"
+Locking PyPI package versions..
+
+██████╗░███████╗███╗░░██╗████████╗░█████╗░███╗░░░███╗██╗░░░░░
+██╔══██╗██╔════╝████╗░██║╚══██╔══╝██╔══██╗████╗░████║██║░░░░░
+██████╦╝█████╗░░██╔██╗██║░░░██║░░░██║░░██║██╔████╔██║██║░░░░░
+██╔══██╗██╔══╝░░██║╚████║░░░██║░░░██║░░██║██║╚██╔╝██║██║░░░░░
+██████╦╝███████╗██║░╚███║░░░██║░░░╚█████╔╝██║░╚═╝░██║███████╗
+╚═════╝░╚══════╝╚═╝░░╚══╝░░░╚═╝░░░░╚════╝░╚═╝░░░░░╚═╝╚══════╝
+
+Successfully built Bento(tag="phone_price_predictor:dpijemevl6nlhlg6")
+```
+
+After creating the Bento, we can finally containerize the model by running
+```yaml
+bentoml containerize phone_price_predictor:latest
+```
+which will create a Docker image that we can check by running `docker image ls`.
+
+We can run this image by passing `phone_price_predictor:f35knqlbck3zlhfw` to "docker run".
+For example: "docker run -it --rm p 3000:3000 phone_price_predictor:f35knqlbck3zlhfw"
+
+*Note: Naturally, the tag can vary*
