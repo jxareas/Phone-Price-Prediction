@@ -1,6 +1,4 @@
-import bentoml
-from bentoml.io import JSON
-
+import numpy as np
 import bentoml
 from bentoml.io import JSON
 
@@ -13,11 +11,13 @@ svc = bentoml.Service("phone_price_predictor", runners=[model_runner])
 
 
 @svc.api(input=JSON(), output=JSON())
-async def classify(application_data):
+async def predict(application_data):
+    print(application_data)
     vector = dv.transform(application_data)
+    print(vector)
     prediction = await model_runner.predict.async_run(vector)
     print(prediction)
 
-    result = prediction[0]
+    log_result = prediction[0]
 
-    return result
+    return np.expm1(log_result)
