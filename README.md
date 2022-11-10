@@ -43,3 +43,49 @@ and unit of measure (if applicable).
 |         4G/LTE         |               Whether the phone is 4G or not               |
 |         Price          |                   Price in Indian Rupees                   |
 
+# Getting Started
+
+This is a set of instructions on setting up this project locally.
+To get a local copy up and running follow these simple example steps.
+
+Prerequisites
+This is an example of how to list things you need to use this software
+
+* Python
+* Pipenv
+
+## Installing Dependencies
+
+You can install the dependencies with pipenv, as they are specified in the `Pipfile` and `Pipfile.lock`, by running
+the following commands:
+
+```yaml
+pipenv install
+pipenv shell
+```
+
+## Building the Model
+
+You can run the [`train.py`]() file or
+the
+full [`model_training.ipynb`](https://github.com/jxareas/Phone-Price-Prediction/blob/master/notebooks/model_training.ipynb)
+Jupyter Notebook to perform all the steps
+required to train the final model used in this project, which is a Gradient Boosted Trees Regressor (XGBoost).
+
+So, in order to train the model, you can run the following command:
+
+```
+python train.py
+```
+
+## Serving the Model (Locally)
+
+We can serve our model with BentoML and the [`predict.py`]() script by running:
+```
+bentoml serve predict.py:svc
+```
+
+This scripts loads the latest model available locally, which can be used in the browser as BentoML automatically
+creates a Swagger UI at http://localhost:3000.
+
+
