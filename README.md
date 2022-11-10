@@ -15,6 +15,11 @@ The data used in this project is the [**Mobile Phone Specifications and
 Prices**](https://www.kaggle.com/datasets/pratikgarai/mobile-phone-specifications-and-prices) dataset, which can be
 found in Kaggle.
 
+Here is a detailed look of the features provided in the dataset, with their descriptions
+and unit of measure (if applicable).
+
+**Note:** *Some feature names are different from those of the actual dataset, which are cleaned.*
+
 |     Feature Name	      |                   	Feature Description	                    |
 |:----------------------:|:----------------------------------------------------------:|
 |          Name          |                     Name of the Phone                      |
